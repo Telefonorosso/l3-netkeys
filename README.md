@@ -158,6 +158,14 @@ Make sure the file is executable:
 sudo chmod +x /etc/rc.local
 ```
 
+You can also install a custom systemd service or simply run l3-netkeys in background: (note the closing "&")
+
+```sh
+sudo ./l3-netkeys.py --host 192.168.1.29 --auto --grab &
+```
+
+You may now close the ssh session and forget your Pi entirely!
+
 ## Auto-run with Miami (Amiga side)
 
 You may enter "C:l3-netkeys" under Interface -> interfaces definition -> interface events -> online
