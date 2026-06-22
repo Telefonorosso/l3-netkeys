@@ -18,6 +18,7 @@ l3-netkeys can be useful when:
 - the Amiga keyboard is damaged or unreliable
 - the Amiga mouse is insufferable
 - you can't live without a mouse wheel
+- you have accidentally swallowed the mouse ball
 
 Left Amiga is mapped to the left Windows key, while Right Amiga is mapped to the Menu/Application key.
 
