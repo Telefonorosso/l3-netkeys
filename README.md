@@ -1,6 +1,6 @@
-# NetKeys L3
+# l3-netkeys
 
-NetKeys L3 is a lightweight UDP keyboard and mouse bridge for classic Amiga systems.
+l3-netkeys is a lightweight UDP keyboard and mouse bridge for classic Amiga systems.
 
 A Raspberry Pi reads local USB keyboard and mouse events and sends compact UDP packets to an Amiga. The Amiga-side program receives those packets and injects input events through `input.device`.
 
@@ -12,7 +12,7 @@ USB keyboard/mouse -> Raspberry Pi -> Wi-Fi/Ethernet -> Amiga
 
 ## Purpose
 
-NetKeys L3 is meant for practical use with real Amiga systems.
+l3-netkeys is meant for practical use with real Amiga systems.
 
 It can be useful when:
 
@@ -151,28 +151,13 @@ The client listens to all readable Linux input devices and asks for `F1` to `F10
 
 The client can request an Amiga keyboard reset.
 
-Hold `Ctrl` and press `R` three times.
+Hold `Ctrl` and press `R` a few times until Amiga reboots.
 
 This sends a reset packet to the Amiga-side receiver, which attempts the keyboard reset chord.
 
-## Running at boot
+## Running at boot (Raspberry side)
 
 NetKeys L3 can be started at boot from `/etc/rc.local`.
-
-First copy the client to a fixed path:
-
-```sh
-sudo cp l3-netkeys.py /usr/local/bin/l3-netkeys.py
-sudo chmod +x /usr/local/bin/l3-netkeys.py
-```
-
-Edit `/etc/rc.local`:
-
-```sh
-sudo nano /etc/rc.local
-```
-
-Example file:
 
 ```sh
 #!/bin/sh -e
@@ -188,22 +173,11 @@ Make sure the file is executable:
 sudo chmod +x /etc/rc.local
 ```
 
-Reboot the Raspberry Pi:
+## Auto-run with Miami (Amiga side)
 
-```sh
-sudo reboot
-```
-
-After reboot, check the log:
-
-```sh
-cat /var/log/l3-netkeys.log
-```
-
+You may enter "C:l3-netkeys" under Interface -> interfaces definition -> interface events -> online (shell) (hide gui) 
 
 ## Limitations
-
-NetKeys L3 depends on the Amiga TCP/IP stack. The Amiga must already be online before starting the receiver.
 
 Mouse wheel support is emulated through cursor-key presses because classic Amiga mouse input has no standard wheel event.
 
