@@ -21,19 +21,6 @@ l3-netkeys can be useful when:
 
 Left Amiga is mapped to the left Windows key, while Right Amiga is mapped to the Menu/Application key.
 
-## How it works
-
-The Raspberry Pi client reads Linux `evdev` input events from `/dev/input/event*` and sends small UDP packets containing:
-
-- Amiga raw key codes
-- key up/down state
-- relative mouse movement
-- mouse button state
-- heartbeat packets
-- optional reset request
-
-The Amiga server listens on a UDP port and writes the corresponding events to input.device.
-
 ## Requirements
 
 ### Amiga side
@@ -185,6 +172,19 @@ Caps Lock is handled on the Raspberry Pi side rather than by sending a synthetic
 Keyboard behavior depends on the active Amiga keymap and on how applications process input.device events.
 
 Wi-Fi latency is usually acceptable, but performance depends on the network and on the Amiga TCP/IP stack.
+
+## How it works
+
+The Raspberry Pi client reads Linux `evdev` input events from `/dev/input/event*` and sends small UDP packets containing:
+
+- Amiga raw key codes
+- key up/down state
+- relative mouse movement
+- mouse button state
+- heartbeat packets
+- optional reset request
+
+The Amiga server listens on a UDP port and writes the corresponding events to input.device.
 
 ## License
 
