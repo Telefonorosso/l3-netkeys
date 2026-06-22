@@ -16,21 +16,21 @@ l3-netkeys is meant for practical use with real Amiga systems.
 
 It can be useful when:
 
-- the Amiga is placed in an awkward position;
-- the Amiga keyboard is damaged or unreliable;
-- the Amiga mouse is insufferable;
-- you can't live without a mouse wheel;
+- the Amiga is placed in an awkward position
+- the Amiga keyboard is damaged or unreliable
+- the Amiga mouse is insufferable
+- you can't live without a mouse wheel
 
 ## How it works
 
 The Raspberry Pi client reads Linux `evdev` input events from `/dev/input/event*` and sends small UDP packets containing:
 
-- Amiga raw key codes;
-- key up/down state;
-- relative mouse movement;
-- mouse button state;
-- heartbeat packets;
-- optional reset request.
+- Amiga raw key codes
+- key up/down state
+- relative mouse movement
+- mouse button state
+- heartbeat packets
+- optional reset request
 
 The Amiga server listens on a UDP port and writes the corresponding events to input.device.
 
