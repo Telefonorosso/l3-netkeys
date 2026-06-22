@@ -2,7 +2,7 @@
 
 l3-netkeys is a lightweight UDP keyboard and mouse bridge for classic Amiga systems.
 
-A Raspberry Pi reads local USB keyboard and mouse events and sends compact UDP packets to an Amiga. The Amiga-side program receives those packets and injects input events through `input.device`.
+A Raspberry Pi reads local USB keyboard and mouse events and sends compact UDP packets to an Amiga. The Amiga-side program receives those packets and injects input events through input.device.
 
 The intended setup is simple:
 
@@ -17,11 +17,11 @@ l3-netkeys is meant for practical use with real Amiga systems.
 It can be useful when:
 
 - the Amiga keyboard is damaged or unreliable;
+- the Amiga mouse is insufferable;
 - the Amiga is placed in an awkward position;
 - a wireless keyboard/mouse setup is desirable;
-- a Raspberry Pi is already available near the Amiga;
 
-It is not a remote desktop system. It only forwards keyboard and mouse input.
+It is not a remote desktop system, it only forwards keyboard and mouse input.
 
 ## How it works
 
@@ -36,7 +36,7 @@ It sends small UDP packets containing:
 - heartbeat packets;
 - optional reset request.
 
-The Amiga server listens on a UDP port and writes the corresponding events to `input.device`.
+The Amiga server listens on a UDP port and writes the corresponding events to input.device.
 
 ## Requirements
 
@@ -100,6 +100,18 @@ sudo ./l3-netkeys.py --host 192.168.1.29 --auto --grab
 
 Replace `192.168.1.29` with the IP address of the Amiga.
 
+## Function-key training
+
+Some USB keyboards expose `F1`-`F10` through a different Linux input device. The `--train` option records where those keys really arrive.
+
+Run:
+
+```sh
+sudo ./l3-netkeys.py --train
+```
+
+The client listens to all readable Linux input devices and asks for `F1` to `F10`. It saves the real `eventX`, evdev code, device name, and Amiga rawcode.
+
 ## Advanced usage
 
 Use explicit input devices:
@@ -135,18 +147,6 @@ sudo ./l3-netkeys.py --host 192.168.1.29 --auto --grab --wheel-steps 3
 
 The mouse wheel is emulated with repeated Amiga cursor-key presses.
 
-## Function-key training
-
-Some USB keyboards expose `F1`-`F10` through a different Linux input device. The `--train` option records where those keys really arrive.
-
-Run:
-
-```sh
-sudo ./l3-netkeys.py --train
-```
-
-The client listens to all readable Linux input devices and asks for `F1` to `F10`. It saves the real `eventX`, evdev code, device name, and Amiga rawcode.
-
 ## Remote reset
 
 The client can request an Amiga keyboard reset.
@@ -178,6 +178,8 @@ sudo chmod +x /etc/rc.local
 You may enter "C:l3-netkeys" under Interface -> interfaces definition -> interface events -> online (shell) (hide gui) 
 
 ## Limitations
+
+Programs that bypass input.device, read the hardware directly, use custom low-level input handlers or expect joystick/mouse signals directly from the physical ports will not see NetKeys L3 input!
 
 Mouse wheel support is emulated through cursor-key presses because classic Amiga mouse input has no standard wheel event.
 
