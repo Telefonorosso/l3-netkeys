@@ -89,7 +89,7 @@ Run:
 sudo ./l3-netkeys.py --train
 ```
 
-The client listens to all readable Linux input devices and asks for `F1` to `F10`. It saves the real `eventX`, evdev code, device name, and Amiga rawcode.
+The client listens to all readable Linux input devices and asks to press `F1` to `F10` sequentially. It saves the real `eventX`, evdev code, device name, and Amiga rawcode.
 
 ## Advanced usage
 
