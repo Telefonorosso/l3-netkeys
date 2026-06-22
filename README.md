@@ -2,7 +2,7 @@
 
 l3-netkeys is a lightweight UDP keyboard and mouse bridge for classic Amiga systems.
 
-A USB keyboard and mouse are connected to the Raspberry Pi. The Pi acts as a network bridge: it reads the local input events and forwards them as compact UDP packets to the Amiga. The Amiga-side program receives those packets and injects the corresponding events through input.device.
+A USB keyboard and mouse are connected to the Raspberry Pi. The latter acts as a network bridge: it reads the local input events and forwards them as compact UDP packets to the Amiga. The Amiga-side program receives those packets and injects the corresponding events through input.device.
 
 The intended setup is simple:
 
