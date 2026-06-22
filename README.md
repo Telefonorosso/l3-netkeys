@@ -20,7 +20,6 @@ It can be useful when:
 - the Amiga is placed in an awkward position;
 - a wireless keyboard/mouse setup is desirable;
 - a Raspberry Pi is already available near the Amiga;
-- the Amiga is already networked through Miami, Roadshow, or a compatible TCP/IP stack.
 
 It is not a remote desktop system. It only forwards keyboard and mouse input.
 
@@ -34,7 +33,6 @@ It sends small UDP packets containing:
 - key up/down state;
 - relative mouse movement;
 - mouse button state;
-- all-keys-up recovery;
 - heartbeat packets;
 - optional reset request.
 
@@ -46,9 +44,6 @@ The Amiga server listens on a UDP port and writes the corresponding events to `i
 
 - AmigaOS 3.x
 - Working TCP/IP stack, for example Miami or Roadshow
-- `bsdsocket.library`
-- Network connection to the Raspberry Pi
-- `l3-netkeys` Amiga executable
 
 ### Raspberry Pi
 
@@ -56,8 +51,6 @@ The Amiga server listens on a UDP port and writes the corresponding events to `i
 - Python 3
 - `python3-evdev`
 - `evtest`, useful for input-device testing and training
-
-On Raspberry Pi OS Trixie:
 
 ```sh
 sudo apt-get update
@@ -154,26 +147,6 @@ sudo ./l3-netkeys.py --train
 
 The client listens to all readable Linux input devices and asks for `F1` to `F10`. It saves the real `eventX`, evdev code, device name, and Amiga rawcode.
 
-During normal use, the learned mapping overrides the default one and can automatically open a second input device if the function keys come from there. If Linux renumbers `eventX` after a reboot, the client tries to recover the device by its saved name.
-
-No Amiga-side changes are required.
-
-Default training file:
-
-```text
-~/.config/amikvm/keys-l3.json
-```
-
-Use a custom config file:
-
-```sh
-sudo ./l3-netkeys.py --train --config ./keys-l3.json
-```
-
-```sh
-sudo ./l3-netkeys.py --host 192.168.1.29 --auto --grab --config ./keys-l3.json
-```
-
 ## Remote reset
 
 The client can request an Amiga keyboard reset.
@@ -184,52 +157,53 @@ This sends a reset packet to the Amiga-side receiver, which attempts the keyboar
 
 ## Running at boot
 
-A simple systemd service can be used.
+NetKeys L3 can be started at boot from `/etc/rc.local`.
 
-Example `/etc/systemd/system/l3-netkeys.service`:
-
-```ini
-[Unit]
-Description=NetKeys L3 Raspberry Pi input bridge
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-Type=simple
-ExecStart=/usr/local/bin/l3-netkeys.py --host 192.168.1.29 --auto --grab
-Restart=on-failure
-RestartSec=2
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Enable it:
+First copy the client to a fixed path:
 
 ```sh
-sudo systemctl daemon-reload
-sudo systemctl enable l3-netkeys.service
-sudo systemctl start l3-netkeys.service
+sudo cp l3-netkeys.py /usr/local/bin/l3-netkeys.py
+sudo chmod +x /usr/local/bin/l3-netkeys.py
 ```
 
-View logs:
+Edit `/etc/rc.local`:
 
 ```sh
-journalctl -u l3-netkeys.service -f
+sudo nano /etc/rc.local
 ```
 
-Disable it:
+Example file:
 
 ```sh
-sudo systemctl stop l3-netkeys.service
-sudo systemctl disable l3-netkeys.service
+#!/bin/sh -e
+
+/usr/local/bin/l3-netkeys.py --host 192.168.1.29 --auto --grab >> /var/log/l3-netkeys.log 2>&1 &
+
+exit 0
 ```
+
+Make sure the file is executable:
+
+```sh
+sudo chmod +x /etc/rc.local
+```
+
+Reboot the Raspberry Pi:
+
+```sh
+sudo reboot
+```
+
+After reboot, check the log:
+
+```sh
+cat /var/log/l3-netkeys.log
+```
+
 
 ## Limitations
 
 NetKeys L3 depends on the Amiga TCP/IP stack. The Amiga must already be online before starting the receiver.
-
-It forwards input only. It does not transmit video, audio, clipboard data, files, or Workbench state.
 
 Mouse wheel support is emulated through cursor-key presses because classic Amiga mouse input has no standard wheel event.
 
