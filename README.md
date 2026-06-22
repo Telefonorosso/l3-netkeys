@@ -172,17 +172,17 @@ sudo chmod +x /etc/rc.local
 
 ## Auto-run with Miami (Amiga side)
 
-You may enter "C:l3-netkeys" under Interface -> interfaces definition -> interface events -> online (shell) (hide gui) 
+You may enter "C:l3-netkeys" under Interface -> interfaces definition -> interface events -> online
 
 ## Limitations
 
-Programs that bypass input.device, read the hardware directly, use custom low-level input handlers or expect joystick/mouse signals directly from the physical ports will not work with l3-netkeys!
+Programs that bypass input.device, read the hardware directly, use custom low-level input handlers or expect joystick/mouse signals directly from the physical ports will not work with l3-netkeys.
 
 Mouse wheel support is emulated through cursor-key presses because classic Amiga mouse input has no standard wheel event.
 
 Caps Lock is handled on the Raspberry Pi side rather than by sending a synthetic Amiga Caps Lock event.
 
-Keyboard behavior depends on the active Amiga keymap and on how applications process `input.device` events.
+Keyboard behavior depends on the active Amiga keymap and on how applications process input.device events.
 
 Wi-Fi latency is usually acceptable, but performance depends on the network and on the Amiga TCP/IP stack.
 
