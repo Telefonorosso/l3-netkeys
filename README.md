@@ -19,6 +19,8 @@ l3-netkeys can be useful when:
 - the Amiga mouse is insufferable
 - you can't live without a mouse wheel
 
+Left Amiga is mapped to the left Windows key, while Right Amiga is mapped to the Menu/Application key.
+
 ## How it works
 
 The Raspberry Pi client reads Linux `evdev` input events from `/dev/input/event*` and sends small UDP packets containing:
