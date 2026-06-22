@@ -43,7 +43,7 @@ The Python client normally needs to run as root because it reads `/dev/input/eve
 
 ## Installation
 
-[Download NetKeys L3 v0.1](https://github.com/user-attachments/files/29198427/l3-netkeys-v1.0.zip)
+[Download NetKeys L3 v1.0](https://github.com/user-attachments/files/29198427/l3-netkeys-v1.0.zip)
 
 Copy the Amiga executable to the Amiga.
 
