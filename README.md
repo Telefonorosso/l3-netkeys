@@ -46,11 +46,10 @@ The Amiga server listens on a UDP port and writes the corresponding events to in
 - Raspberry Pi OS
 - Python 3
 - `python3-evdev`
-- `evtest`
 
 ```sh
 sudo apt-get update
-sudo apt-get install python3-evdev evtest
+sudo apt-get install python3-evdev
 ```
 
 The Python client normally needs to run as root because it reads `/dev/input/event*` devices and may grab them exclusively.
