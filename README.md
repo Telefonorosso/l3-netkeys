@@ -163,7 +163,9 @@ You may enter "C:l3-netkeys" under Interface -> interfaces definition -> interfa
 
 ## Limitations
 
-Programs that bypass input.device, read the hardware directly, use custom low-level input handlers or expect joystick/mouse signals directly from the physical ports will not work with l3-netkeys.
+**On the Amiga side, both the TCP/IP stack and `l3-netkeys` should ideally be started automatically at boot. Otherwise there is a practical bootstrap problem: a keyboard or mouse may be needed to start the software that is supposed to provide keyboard and mouse input...
+
+Programs that bypass input.device, read the hardware directly, use custom low-level input handlers or expect joystick/mouse signals directly from the physical ports will not work with l3-netkeys.**
 
 Mouse wheel support is emulated through cursor-key presses because classic Amiga mouse input has no standard wheel event.
 
