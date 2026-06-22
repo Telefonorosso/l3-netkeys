@@ -16,18 +16,14 @@ l3-netkeys is meant for practical use with real Amiga systems.
 
 It can be useful when:
 
+- the Amiga is placed in an awkward position;
 - the Amiga keyboard is damaged or unreliable;
 - the Amiga mouse is insufferable;
-- the Amiga is placed in an awkward position;
-- a wireless keyboard/mouse setup is desirable;
-
-It is not a remote desktop system, it only forwards keyboard and mouse input.
+- you can't live without a mouse wheel;
 
 ## How it works
 
-The Raspberry Pi client reads Linux `evdev` input events from `/dev/input/event*`.
-
-It sends small UDP packets containing:
+The Raspberry Pi client reads Linux `evdev` input events from `/dev/input/event*` and sends small UDP packets containing:
 
 - Amiga raw key codes;
 - key up/down state;
@@ -40,7 +36,7 @@ The Amiga server listens on a UDP port and writes the corresponding events to in
 
 ## Requirements
 
-### Amiga
+### Amiga side
 
 - AmigaOS 3.x
 - Working TCP/IP stack, for example Miami or Roadshow
@@ -50,7 +46,7 @@ The Amiga server listens on a UDP port and writes the corresponding events to in
 - Raspberry Pi OS
 - Python 3
 - `python3-evdev`
-- `evtest`, useful for input-device testing and training
+- `evtest`
 
 ```sh
 sudo apt-get update
@@ -86,13 +82,7 @@ l3-netkeys
 
 By default it listens on UDP port `6800`.
 
-On the Raspberry Pi, list input devices if needed:
-
-```sh
-sudo ./l3-netkeys.py --list
-```
-
-Run the client:
+Run the client on the Pi:
 
 ```sh
 sudo ./l3-netkeys.py --host 192.168.1.29 --auto --grab
@@ -113,6 +103,12 @@ sudo ./l3-netkeys.py --train
 The client listens to all readable Linux input devices and asks for `F1` to `F10`. It saves the real `eventX`, evdev code, device name, and Amiga rawcode.
 
 ## Advanced usage
+
+List input devices:
+
+```sh
+sudo ./l3-netkeys.py --list
+```
 
 Use explicit input devices:
 
@@ -145,13 +141,13 @@ Adjust mouse wheel emulation:
 sudo ./l3-netkeys.py --host 192.168.1.29 --auto --grab --wheel-steps 3
 ```
 
-The mouse wheel is emulated with repeated Amiga cursor-key presses.
+The mouse wheel is emulated with repeated Amiga cursor-key presses (3 in this case).
 
 ## Remote reset
 
 The client can request an Amiga keyboard reset.
 
-Hold `Ctrl` and press `R` a few times until Amiga reboots.
+Hold `Ctrl` and press `r` a few times until Amiga reboots.
 
 This sends a reset packet to the Amiga-side receiver, which attempts the keyboard reset chord.
 
